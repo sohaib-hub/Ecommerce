@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../resources/appcolors/app_colors.dart';
 class CustomTextField extends StatelessWidget {
@@ -23,25 +24,28 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: cheak_validator_key,
-      child: TextFormField(
-        controller: data_controller,
-        style: TextStyle(color:Appcolors.black,),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height*0.065,
+        child: TextFormField(
+          controller: data_controller,
+          style: TextStyle(color:Appcolors.black,),
 
-        decoration: InputDecoration(
-         border: InputBorder.none,
+          decoration: InputDecoration(
+           border: InputBorder.none,
 
-          labelText: lable_text,
-          prefixIcon: prefix_icon,
-          labelStyle: TextStyle(fontSize: 12),
-            suffix: sufix,
+            labelText: lable_text,
+            prefixIcon: prefix_icon,
+            labelStyle: TextStyle(fontSize: 12),
+              suffix: sufix,
 
+          ),
+          obscureText: obsecure,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Please Enter value';
+            }
+          },
         ),
-        obscureText: obsecure,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Please Enter value';
-          }
-        },
       ),
     );
   }

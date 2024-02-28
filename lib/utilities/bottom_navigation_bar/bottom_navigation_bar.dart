@@ -71,13 +71,14 @@ void _ontaped (index) {
         backgroundColor: Colors.white,
       selectedIconTheme: IconThemeData(
         //color: Appcolors.green,
-        size: 20,
+        size: 14,
+
 
       ),
      // selectedItemColor: Colors.green,
       unselectedIconTheme: IconThemeData(
         //color: Appcolors.gray,
-        size: 18,
+        size: 14,
        // shadows: Shadow(color: AppColors.green,blurRadius: 23)
       ),
     type: BottomNavigationBarType.fixed,

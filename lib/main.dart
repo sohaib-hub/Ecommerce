@@ -94,8 +94,8 @@ class MyApp extends StatelessWidget {
       ),
       //
       //
-    //  home: SplashView(),
-    home: HomeView(),
+      home: SplashView(),
+   // home: HomeView(),
 
       // initialRoute: AppRoutes.initialfRoute,
       // getPages: AppRoutes.pages,

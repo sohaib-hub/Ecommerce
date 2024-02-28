@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:ecommerce/resources/app_images/appimages.dart';
+import 'package:ecommerce/view/auth_view/auth_view.dart';
+import 'package:ecommerce/view/homeview/homeviw.dart';
 import 'package:ecommerce/view/welcome_view/welcome_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../resources/appcolors/app_colors.dart';
@@ -13,37 +16,28 @@ class SplashView extends StatefulWidget {
 
 class _SplashViewState extends State<SplashView> with SingleTickerProviderStateMixin{
   @override
-  // FirebaseAuth auth =FirebaseAuth.instance;
+  FirebaseAuth auth =FirebaseAuth.instance;
   late AnimationController _animationController;
   void initState() {
     // TODO: implement initState
     super.initState();
-    _animationController=AnimationController(
+    _animationController = AnimationController(
         vsync: this,
-      duration:  const Duration(seconds: 2)
+        duration: const Duration(seconds: 2)
     );
     _animationController.forward();
-    Timer(const Duration(seconds: 5),(){
-       Get.to(WelcomeView());
-
-    });
-
-    /*// final user=auth.currentUser;
-    if(user!=null){
-    Future.delayed(Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScr()),
-      );
-    });
-
-  }else{
+    // Timer(const Duration(seconds: 5),(){
+    //    Get.to(WelcomeView());
+    final user = auth.currentUser;
+    if (user != null) {
       Future.delayed(Duration(seconds: 5), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => SignUpView()),
-        );
-      });*/
+        Get.to(WelcomeView());
+      });
+    } else {
+      Future.delayed(Duration(seconds: 5), () {
+        Get.to(AuthView());
+      });
+    }
   }
 
 

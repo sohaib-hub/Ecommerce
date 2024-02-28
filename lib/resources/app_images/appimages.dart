@@ -14,4 +14,8 @@ class AppImages{
   static String cd='assets/images/cd.jpg';
   static String polish='assets/images/polish.jpg';
   static String machine='assets/images/machin.jpg';
+  static String chicken='assets/images/f1.jpg';
+  static String saled='assets/images/f2.jpg';
+  static String spicy_dish='assets/images/f3.jpg';
+  //static String anim_image='assets/animations/anim.json';
 }

@@ -19,11 +19,24 @@ class FoodsView extends StatefulWidget {
 
 class _FoodsViewState extends State<FoodsView> {
   List<String>imageurl=[];
-  List<String>title=[];
+  List<String>title=[
+    'Fast Food','salad','Fries exe'
+  ];
+  List<String>Subtitle=[
+    'American dish','Rushions','Spicy dish'
+  ];
+  List<String>price=[
+    '\$15','\$8','\$10'
+  ];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    if(imageurl.isEmpty){
+    fetchimage();}
+    else if(imageurl.isNotEmpty){
+      imageurl.toList();
+    }
 
   }
    void fetchimage()async{
@@ -41,59 +54,112 @@ class _FoodsViewState extends State<FoodsView> {
   Widget build(BuildContext context) {
     return CustomScaffold(
       body:SafeArea(
-        child: Column(
-          children: [
-            Container(
-              width: Get.width,
-              height: Get.height*0.12,
-              color: Appcolors.green,
-              alignment: Alignment.center,
-              child: Container(
-                height: Get.height*0.07,
+        child: Container(
+          color: Appcolors.pink300,
+          child: Column(
+            children: [
+              Container(
                 width: Get.width,
-                color: Appcolors.whiteA700,
-                margin: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: Get.height*0.08,
-                      width: Get.width*0.8,
-                      child: TextField(
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(AppIcons.search),
-                            hintText: 'search Restaurant & dishes'
+                height: Get.height*0.12,
+                color: Appcolors.green,
+                alignment: Alignment.center,
+                child: Container(
+                  height: Get.height*0.07,
+                  width: Get.width,
+                  color: Appcolors.whiteA700,
+                  margin: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: Get.height*0.08,
+                          width: Get.width*0.8,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(AppIcons.search),
+                                hintText: 'search Restaurant & dishes'
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                               // searchtext=value;
+                              });
+                            },
+                          ),
                         ),
-                        onChanged: (value){
-                          setState(() {
-                           // searchtext=value;
-                          });
-                        },
                       ),
-                    ),
-                    IconButton(onPressed: (){},
-                        icon: Icon(AppIcons.filter_list))
-                  ],
-                ),
-        
-              ),
-
-            ),
-            Expanded(child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
-                itemCount: imageurl.length,
-                itemBuilder:(context,index){
-                  return Container(
-                    height: Get.height*0.6,
-                  decoration: BoxDecoration(
-                    color: Appcolors.blue,
-                    image: DecorationImage(image: NetworkImage(imageurl[index])
-
-                        ,fit: BoxFit.cover)
+                      IconButton(onPressed: (){},
+                          icon: Icon(AppIcons.filter_list))
+                    ],
                   ),
-                  );
-                }))
-          ],
+
+                ),
+
+              ),
+              Expanded(child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
+                  itemCount: imageurl.length,
+                  itemBuilder:(context,index){
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        alignment: Alignment.bottomLeft,
+                        height: Get.height*0.6,
+                      decoration: BoxDecoration(
+                        color: Appcolors.blue,
+                        image: DecorationImage(image:NetworkImage(imageurl[index]),fit: BoxFit.cover,
+
+                        )
+                      ),
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.end,
+                         crossAxisAlignment: CrossAxisAlignment.end,
+                         children:[
+                           Column(
+                             mainAxisAlignment: MainAxisAlignment.end,
+                             children: [
+
+
+                          Container(
+                           alignment: Alignment.center,
+                           height: Get.height*0.04,
+                           width: Get.width*0.25,
+                           decoration: BoxDecoration(
+                             color: Appcolors.green,
+                             borderRadius: BorderRadius.circular(9)
+                           ),
+
+                           child: Text(title[index],style: TextStyle(fontWeight: FontWeight.bold)),
+                         ),
+                          Container(
+                           alignment: Alignment.center,
+                            height: Get.height*0.04,
+                            width: Get.width*0.30,
+                            decoration: BoxDecoration(
+                                color: Appcolors.green,
+                                borderRadius: BorderRadius.circular(9)
+                            ),
+                           child: Text(Subtitle[index],),
+                         ),
+                             ],
+                           ),
+                         Spacer(),
+                         Container(
+                           alignment: Alignment.center,
+                           height: Get.height*0.04,
+                           width: Get.width*0.25,
+                           decoration: BoxDecoration(
+                               color: Appcolors.green,
+                               borderRadius: BorderRadius.circular(9)
+                           ),
+                           child: Text(price[index]),
+                         ),
+                       ]),
+                      ),
+                    );
+                  }))
+            ],
+          ),
         ),
       ),
       ShowBottomNavigationbar: true

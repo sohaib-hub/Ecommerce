@@ -1,8 +1,12 @@
+import 'package:ecommerce/resources/app_animations/app_anim.dart';
 import 'package:ecommerce/resources/app_images/appimages.dart';
 import 'package:ecommerce/view/auth_view/auth_view.dart';
+import 'package:ecommerce/view/homeview/homeviw.dart';
 import 'package:ecommerce/view/welcome_view/welcome_view.dart';
+import 'package:ecommerce/viewmodel/welcom_view_model/welcom_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../resources/appcolors/app_colors.dart';
 
@@ -16,24 +20,25 @@ class WelcomeView extends StatefulWidget {
 class _WelcomeViewState extends State<WelcomeView> {
   PageController _pageController=PageController();
    int currentpage=0;
-  List<WelcomeSlider>welcomslider_list=[
+  /*List<WelcomeSlider>welcomslider_list=[
  WelcomeSlider(
-     AppImages.shoping1,
+     Appanimation.sale_anim,
      'Shop All You Want',
      'Select from a wide range of verity',
  ),
     WelcomeSlider(
-        AppImages.app_logo,
+        Appanimation.basket_anim,
         'Shop All You Want',
         'Select from a wide range of verity'
     ),
     WelcomeSlider(
-        AppImages.shoping3,
+      Appanimation.sale_anim,
         'The Greatest Shop Journey ',
         'Select from a wide range of verity'
     ),
 
-  ];
+  ];*/
+  WelcomviewModel welcomviewModel=WelcomviewModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +51,7 @@ class _WelcomeViewState extends State<WelcomeView> {
           Align(
             alignment: Alignment.topRight,
             child: TextButton(onPressed: (){
-              Get.to(AuthView());
+              Get.to(HomeView());
             },
                 child:Text('Skip',style: TextStyle(color: Appcolors.redA200,fontSize: 16),)),
           ),
@@ -54,7 +59,7 @@ class _WelcomeViewState extends State<WelcomeView> {
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-                itemCount: welcomslider_list.length,
+                itemCount: welcomviewModel.welcomslider_list.length,
                 onPageChanged: (value){
                 setState(() {
                   currentpage=value;
@@ -63,10 +68,11 @@ class _WelcomeViewState extends State<WelcomeView> {
                 itemBuilder: (context,index)
             
                 {
-                  final item=welcomslider_list[index];
+                  final item=welcomviewModel.welcomslider_list[index];
               return Column(
                 children: [
-                  Image.asset(item.image,height: Get.height*0.6,width:Get.width*0.9,fit: BoxFit.fill,),
+                 // Image.asset(item.image,height: Get.height*0.6,width:Get.width*0.9,fit: BoxFit.fill,),
+                  Lottie.asset(item.image,height: Get.height*0.6,width:Get.width*0.9,fit: BoxFit.fill,),
                     //child:Image.asset(AppImages.shoping1,height: 350,) ),
                  //SizedBox(height: 10,),
                   Text(item.title,
@@ -119,7 +125,7 @@ class _WelcomeViewState extends State<WelcomeView> {
             FloatingActionButton(
               backgroundColor: Appcolors.red,
               onPressed: (){
-               if(currentpage<welcomslider_list.length-1){
+               if(currentpage<welcomviewModel.welcomslider_list.length-1){
                  _pageController.nextPage(
                      duration: const Duration(
                          microseconds: 300
@@ -131,11 +137,11 @@ class _WelcomeViewState extends State<WelcomeView> {
                }
               },
 
-            child: currentpage!=welcomslider_list.length-1?
+            child: currentpage!=welcomviewModel.welcomslider_list.length-1?
             Icon(Icons.arrow_right_alt,color: Appcolors.whiteA700,):
               InkWell(child: Icon(Icons.done,color: Appcolors.whiteA700,),
               onTap: (){
-                Get.to(AuthView());
+                Get.to(HomeView());
               },),
 
             ),
@@ -147,7 +153,7 @@ class _WelcomeViewState extends State<WelcomeView> {
 }
 
 //
-class WelcomeSlider{
+/*class WelcomeSlider{
    final String title;
    final String descripton;
    final String image;
@@ -158,4 +164,4 @@ class WelcomeSlider{
       );
 
 
-}
+}*/

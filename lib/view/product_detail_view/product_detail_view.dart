@@ -2,13 +2,22 @@ import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/resources/AppIcons/appicons.dart';
+import 'package:ecommerce/utilities/cart_provider/cart_provider.dart';
+import 'package:ecommerce/view/homeview/homeviw.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../resources/app_images/appimages.dart';
 import '../../resources/appcolors/app_colors.dart';
 class ProductDetailView extends StatefulWidget {
-  const ProductDetailView({super.key});
+  String image;
+  String title;
+  double price;
+   ProductDetailView({super.key,
+  required this.image,
+    required this.title,
+    required this.price
+  });
 
   @override
   State<ProductDetailView> createState() => _ProductDetailViewState();
@@ -16,12 +25,19 @@ class ProductDetailView extends StatefulWidget {
 
 class _ProductDetailViewState extends State<ProductDetailView> {
   int selectedbuttonindex=2;
+   CartController cartController = Get.put(CartController());
+
+  void addToCart() {
+    CartItem newItem = CartItem(image:widget.image??'no image avalible',
+        title: widget.title??'', price:widget.price, quantity: 0);
+    cartController.addToCart(newItem);
+  }
   void selectedbutton(int index){
     setState(() {
       selectedbuttonindex=index;
     });
   }
-  List<String>image=[AppImages.jelly,AppImages.machine,AppImages.cd];
+  //List<String>image=[AppImages.jelly,AppImages.machine,AppImages.cd];
   int currebtslide=0;
   @override
   Widget build(BuildContext context) {
@@ -40,8 +56,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               Container(
                 height: Get.height*0.3,
                width: Get.width*0.8,
-                child:
-                CarouselSlider(
+                child:Image.asset(widget.image),
+                /*CarouselSlider(
                   options: CarouselOptions(height: 400.0,
                     enlargeCenterPage: true,
                     onPageChanged: (index, _){
@@ -59,7 +75,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       },
                     );
                   }).toList(),
-                ),
+                ),*/
 
               ),
               Padding(
@@ -67,34 +83,37 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                 child: Row(
 
                   children: [
-                    Text('Jelly',style: TextStyle(fontWeight: FontWeight.bold,color: Appcolors.black,fontSize: 16),),
+                    Text(widget.title,style: TextStyle(fontWeight: FontWeight.bold,color: Appcolors.black,fontSize: 16),),
                   const   Spacer(),
-                    Text('\$160',style: TextStyle(color: Appcolors.green,fontSize: 16),)
+                    Text('\$${widget.price}',style: TextStyle(color: Appcolors.green,fontSize: 16),)
                   ],
                 ),
               ),
-              Center(
-                child:
-                    Container(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                alignment: Alignment.topLeft,
+                  color: Appcolors.whiteA700,
+                  child:   Text('Product Description',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Appcolors.black),),
+                ),
+              ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
 
-                      color: Appcolors.whiteA700,
-                      child:   Text('Product Description',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Appcolors.black),),
-                    ),),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Center(
-                      child: Container(
-                        alignment: Alignment.center,
-                        color: Appcolors.whiteA700,
-                        child:   Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('-> This is so amazing',style: TextStyle(fontSize: 14,color: Appcolors.black),),
-                            Text('-> This is so amazing',style: TextStyle(fontSize: 14,color: Appcolors.black),),
-                            Text('-> This is so amazing',style: TextStyle(fontSize: 14,color: Appcolors.black),),
-                            Text('-> This is so amazing',style: TextStyle(fontSize: 14,color: Appcolors.black),),
-                          ],
+                        child: Container(
+                          alignment: Alignment.topLeft,
+
+                          child:   Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('-> This is so amazing',style: TextStyle(fontSize: 14,color: Appcolors.black),),
+                              Text('-> This is so amazing',style: TextStyle(fontSize: 14,color: Appcolors.black),),
+                              Text('-> This is so amazing',style: TextStyle(fontSize: 14,color: Appcolors.black),),
+                              Text('-> This is so amazing',style: TextStyle(fontSize: 14,color: Appcolors.black),),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -119,9 +138,13 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               Expanded(child:
               Container(
                   height: Get.height*0.06,
-                  child: ElevatedButton(onPressed: (){
+                  child: ElevatedButton(
+                    onPressed: (){
                     selectedbutton(2);
-
+                    addToCart();
+                    Get.snackbar('Added','',
+                    );
+                    Get.to(const HomeView());
                   },
                     style: ElevatedButton.styleFrom(
                       primary: selectedbuttonindex==2?Appcolors.green:Appcolors.whiteA700,
